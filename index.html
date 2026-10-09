@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Raiqal Hareez's Birthday Party</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e01b24;--red-d:#9c0f17;--blue:#1c3f9e;--navy:#0b1437;--gold:#ffe14d;--line:rgba(255,255,255,.22);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--navy);color:#fff;font:400 16px/1.55 'Poppins',system-ui,sans-serif;overflow-x:hidden}
+.wrap{max-width:480px;margin:0 auto}
+.display{font-family:'Bangers',Impact,sans-serif;letter-spacing:.04em;font-weight:400}
+.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 50% 0,#2a4fc4,var(--blue) 35%,var(--navy))}
+.bg svg{position:absolute;inset:0;width:100%;height:100%;opacity:.16}
+
+/* Cover */
+#cover{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+background:linear-gradient(160deg,var(--red),var(--red-d));transition:transform .9s cubic-bezier(.7,0,.2,1)}
+#cover.open{transform:translateY(-100%)}
+#cover>svg.web{position:absolute;inset:0;width:100%;height:100%;opacity:.22}
+#cover>*:not(.web){position:relative}
+.eyebrow{font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;opacity:.9}
+.cover-name{font-size:clamp(3rem,16vw,5rem);line-height:.95;text-shadow:4px 4px 0 var(--navy);margin:.5rem 0 .3rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;border:0;cursor:pointer;font:600 .95rem 'Poppins',sans-serif;padding:.85rem 1.5rem;border-radius:999px;background:#fff;color:var(--red);text-decoration:none;box-shadow:0 5px 0 rgba(0,0,0,.28);transition:transform .15s,box-shadow .15s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.28)}
+.btn.red{background:var(--red);color:#fff;box-shadow:0 5px 0 #6e0910}
+.btn.blue{background:var(--blue);color:#fff;box-shadow:0 5px 0 #0a1c52}
+.btn svg{width:18px;height:18px}
+.swing{position:absolute!important;top:0;left:50%;margin-left:-20px;transform-origin:top center;animation:sway 3s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(6deg)}}
+
+/* Sections */
+section{padding:52px 22px;text-align:center}
+.badge{display:inline-block;background:var(--red);padding:.15rem 1.1rem;transform:rotate(-3deg);font-size:1.7rem;border:3px solid #fff;box-shadow:5px 5px 0 var(--navy)}
+h1{font-size:clamp(3.2rem,17vw,5.4rem);line-height:.95;margin:.8rem 0 .2rem;text-shadow:4px 4px 0 var(--red)}
+h2{font-size:2.1rem;text-shadow:3px 3px 0 var(--red);margin-bottom:1.1rem}
+.sub{opacity:.85;letter-spacing:.2em;text-transform:uppercase;font-size:.78rem;margin-top:1.1rem}
+
+/* Image placeholders */
+.ph{position:relative;pointer-events:none;user-select:none;-webkit-user-select:none;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.35rem;overflow:hidden;font-size:.78rem;text-align:center;
+background:repeating-linear-gradient(45deg,rgba(255,255,255,.09) 0 10px,rgba(255,255,255,.03) 10px 20px);border:3px dashed rgba(255,255,255,.6)}
+.ph svg{width:30px;height:30px;opacity:.85}
+.ph img,.ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph.has{border-style:solid;border-color:#fff}
+.ph.has>span,.ph.has>svg{display:none}
+.ph img:not([src]),.ph img[src=""]{display:none}
+.ph img{pointer-events:none;-webkit-user-drag:none}
+.ph video{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;pointer-events:auto}
+.ph.vid video{display:block}
+.ph.vid img{display:none}
+.hero-ph{width:min(72vw,300px);aspect-ratio:1;border-radius:50%;margin:1.6rem auto 0;border-color:var(--red);box-shadow:0 0 0 6px #fff,0 0 0 12px var(--red)}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gal .ph{aspect-ratio:3/4;border-radius:18px}
+.gal .ph:first-child{transform:rotate(-2deg)}.gal .ph:last-child{transform:rotate(2deg)}
+.media-ph{aspect-ratio:16/10;width:100%;border-radius:18px;margin-top:1.1rem}
+
+/* Comic animation */
+.stage{position:relative;height:230px;margin:0 -22px;overflow:hidden;border-block:4px solid #fff;background:linear-gradient(#ff5a4d,var(--red) 55%,#8f0d14)}
+.stage .dots{position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.22) 18%,transparent 20%) 0 0/14px 14px}
+.stage .city{position:absolute;bottom:0;left:0;width:100%;height:110px}
+.swinger{position:absolute;top:-6px;left:0;width:100%;height:190px}
+.pend{transform-box:view-box;transform-origin:240px 0;animation:pend 2.4s ease-in-out infinite}
+@keyframes pend{0%,100%{transform:rotate(-38deg)}50%{transform:rotate(38deg)}}
+.burst{position:absolute;font-size:2rem;color:var(--gold);-webkit-text-stroke:2px var(--navy);text-shadow:3px 3px 0 var(--navy);opacity:0;animation:pop 4.8s infinite}
+.b1{left:8%;top:52%;--r:-12deg}.b2{right:8%;top:30%;--r:10deg;animation-delay:1.6s}.b3{left:36%;top:70%;--r:-4deg;animation-delay:3.2s}
+@keyframes pop{0%,8%{opacity:0;transform:scale(.2) rotate(var(--r))}14%{opacity:1;transform:scale(1.25) rotate(var(--r))}22%,34%{opacity:1;transform:scale(1) rotate(var(--r))}42%,100%{opacity:0;transform:scale(.6) rotate(var(--r))}}
+.spidey{position:absolute;right:14%;top:0;animation:drop 3.6s ease-in-out infinite}
+@keyframes drop{50%{transform:translateY(26px)}}
+
+/* Countdown */
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.count div{background:rgba(255,255,255,.08);border:2px solid var(--line);border-radius:14px;padding:.7rem 0}
+.count b{display:block;font:400 2rem/1 'Bangers',Impact,sans-serif;letter-spacing:.04em}
+.count small{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;opacity:.8}
+
+/* Details */
+.card{background:#fff;color:var(--navy);border-radius:22px;padding:.8rem 1.4rem;text-align:left;box-shadow:8px 8px 0 var(--red)}
+.row{display:flex;gap:14px;align-items:center;padding:.85rem 0;border-bottom:2px dashed #cfd6ee}
+.row:last-child{border:0}
+.row .i{flex:0 0 44px;height:44px;border-radius:12px;background:var(--blue);color:#fff;display:grid;place-items:center}
+.row .i svg{width:22px;height:22px}
+.row small{display:block;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:#5b6794}
+.row strong{font-weight:600;font-size:1.02rem;line-height:1.3;display:block}
+.note{margin-top:1.5rem;background:linear-gradient(90deg,var(--red),#b5121a);border:2px solid #fff;border-radius:16px;padding:1rem 1.2rem;font-weight:500}
+.actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+footer{padding:30px 22px 60px;text-align:center;font-size:.85rem;opacity:.85}
+
+/* RSVP form */
+.form{padding:1.5rem 1.4rem;display:flex;flex-direction:column;gap:.35rem}
+.form label,.form .lbl{font-weight:600;font-size:.9rem;color:#2b3350;margin-top:.7rem}
+.form input[type=text],.form input[type=tel],.form input[type=number]{width:100%;font:400 1rem 'Poppins',system-ui,sans-serif;color:var(--navy);background:#fff;border:1.5px solid #dfe4f3;border-radius:12px;padding:.8rem 1rem;outline:0;transition:border-color .2s,box-shadow .2s}
+.form input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(28,63,158,.15)}
+.form input:disabled{background:#f1f3fa;color:#8b93b3}
+.form .help{color:#6a7399;font-size:.78rem}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice label{position:relative;margin:0;font-weight:500}
+.choice input{position:absolute;opacity:0;inset:0}
+.choice span{display:block;text-align:center;padding:.75rem .5rem;border:1.5px solid #dfe4f3;border-radius:12px;font-size:.92rem;transition:.2s}
+.choice input:checked+span{background:var(--blue);border-color:var(--blue);color:#fff}
+.choice input:focus-visible+span{box-shadow:0 0 0 3px rgba(28,63,158,.25)}
+.form .btn{justify-content:center;margin-top:1.1rem;width:100%}
+.form .btn:disabled{opacity:.6;cursor:default;transform:none}
+#msg{min-height:1.3em;margin-top:.5rem;font-size:.88rem;text-align:center;color:#1c7a3d}
+#msg.err{color:#c4161f}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.swing,.pend,.spidey,.burst{animation:none}.burst{opacity:1}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="webs" viewBox="0 0 400 400"><g fill="none" stroke="#fff" stroke-width="1.5"><path d="M0 0L400 400M200 0V400M400 0L0 400M0 200H400M100 0L300 400M300 0L100 400M0 100L400 300M0 300L400 100"/><circle cx="200" cy="200" r="40"/><circle cx="200" cy="200" r="80"/><circle cx="200" cy="200" r="120"/><circle cx="200" cy="200" r="160"/><circle cx="200" cy="200" r="200"/></g></symbol>
+<symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-9 9"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.8-4.500 4.200 1.1 6.1L12 16.800 6.6 19.7l1.1-6.1L3.200 9.400l6.1-.8z"/></symbol>
+<symbol id="i-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.800 7L3 21l2-5.200A8 8 0 1 1 21 12z"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6M16 4.7a3.5 3.5 0 0 1 0 6.6M18 14.3c2.2.7 3.5 2.700 3.5 5.700"/></symbol>
+</defs></svg>
+
+<div class="bg"><svg aria-hidden="true"><use href="#webs" width="140%" height="70%" x="-20%" y="-5%"/></svg></div>
+
+<!-- ===== COVER ===== -->
+<div id="cover">
+  <svg class="web" aria-hidden="true"><use href="#webs" width="150%" height="100%" x="-25%"/></svg>
+  <svg class="swing" width="40" height="150" viewBox="0 0 40 150" aria-hidden="true"><path d="M20 0V95" stroke="#fff" stroke-width="3"/><g transform="translate(20 112)"><ellipse rx="14" ry="17" fill="#1c3f9e" stroke="#fff" stroke-width="3"/><path d="M-14 0H14M0-17V17" stroke="#fff" stroke-width="1.5" opacity=".6"/></g></svg>
+  <p class="eyebrow" data-t="coverEyebrow"></p>
+  <div class="cover-name display"><span data-t="firstName"></span><br><span data-t="lastName"></span></div>
+  <p class="eyebrow" style="margin-bottom:1.8rem" data-t="coverSubtitle"></p>
+  <button class="btn" id="openBtn" type="button" data-t="openLabel"></button>
+</div>
+
+<main class="wrap">
+
+  <!-- ===== HERO ===== -->
+  <section>
+    <div class="badge display rv" data-t="saveTheDate"></div>
+    <p class="sub rv" data-t="heroEyebrow"></p>
+    <h1 class="display rv"><span data-t="firstName"></span><br><span data-t="lastName"></span></h1>
+    <div class="rv">
+      <div class="ph hero-ph" data-slot="hero">
+      <!-- PHOTO 1 (main portrait): paste your image path or URL inside src="" -->
+      <img src="" alt="" draggable="false">
+      <svg><use href="#i-img"/></svg><span>Photo 1</span>
+    </div>
+    </div>
+  </section>
+
+  <!-- ===== COMIC ANIMATION (decorative, original artwork) ===== -->
+  <section style="padding:10px 22px 30px">
+    <div class="stage rv" aria-hidden="true">
+      <div class="dots"></div>
+      <svg class="swinger" viewBox="0 0 480 190" preserveAspectRatio="xMidYMin slice"><g class="pend"><path d="M240 0V120" stroke="#fff" stroke-width="3"/><circle cx="240" cy="138" r="20" fill="#1c3f9e" stroke="#fff" stroke-width="4"/><path d="M222 138h36M240 120v36M228 126l24 24M252 126l-24 24" stroke="#fff" stroke-width="1.5" opacity=".7"/></g></svg>
+      <div class="spidey"><svg width="46" height="90" viewBox="0 0 46 90"><path d="M23 0V52" stroke="#fff" stroke-width="2"/><g transform="translate(23 64)"><ellipse rx="9" ry="10" fill="#0b1437" stroke="#fff" stroke-width="1.5"/><circle cx="-12" cy="-10" r="5" fill="#0b1437"/><circle cx="12" cy="-10" r="5" fill="#0b1437"/><path d="M-9 4L-20 14M9 4L20 14M-9-2L-22 2M9-2L22 2" stroke="#0b1437" stroke-width="2.5" stroke-linecap="round"/><circle cx="-3.5" cy="-2" r="2.4" fill="#fff"/><circle cx="3.5" cy="-2" r="2.4" fill="#fff"/></g></svg></div>
+      <span class="burst display b1">THWIP!</span><span class="burst display b2">POW!</span><span class="burst display b3">PARTY TIME!</span>
+      <svg class="city" viewBox="0 0 480 110" preserveAspectRatio="none"><path fill="#0b1437" d="M0 110V60h30V35h26v30h20V20h28v45h24V50h30V30h24v40h26V45h30V15h26v50h24V40h30V60h30V28h24v42h26V110z"/><g fill="#ffe14d" opacity=".85"><rect x="40" y="70" width="5" height="6"/><rect x="100" y="45" width="5" height="6"/><rect x="215" y="55" width="5" height="6"/><rect x="305" y="35" width="5" height="6"/><rect x="395" y="75" width="5" height="6"/><rect x="440" y="48" width="5" height="6"/></g></svg>
+    </div>
+    <!-- Optional: your own GIF / MP4 / photo -->
+    <div class="ph media-ph rv" data-slot="media">
+      <!-- PHOTO / GIF 4: paste your image path or URL inside src="" (or set a video in the INVITE config) -->
+      <img src="" alt="" draggable="false">
+      <video playsinline controls preload="metadata" controlslist="nodownload noplaybackrate" disablepictureinpicture></video>
+      <svg><use href="#i-img"/></svg><span>Photo / GIF 4</span>
+    </div>
+  </section>
+
+  <!-- ===== COUNTDOWN ===== -->
+  <section style="padding-top:20px">
+    <h2 class="display rv" data-t="countdownTitle"></h2>
+    <div class="count rv">
+      <div><b id="d">00</b><small>Days</small></div><div><b id="h">00</b><small>Hours</small></div>
+      <div><b id="m">00</b><small>Mins</small></div><div><b id="s">00</b><small>Secs</small></div>
+    </div>
+  </section>
+
+  <!-- ===== DETAILS ===== -->
+  <section style="padding-top:20px">
+    <h2 class="display rv" data-t="detailsTitle"></h2>
+    <div class="card rv">
+      <div class="row"><div class="i"><svg><use href="#i-cal"/></svg></div><div><small>Date</small><strong data-t="dateText"></strong></div></div>
+      <div class="row"><div class="i"><svg><use href="#i-clock"/></svg></div><div><small>Time</small><strong data-t="timeText"></strong></div></div>
+      <div class="row"><div class="i"><svg><use href="#i-pin"/></svg></div><div><small>Venue</small><strong data-t="venue"></strong></div></div>
+      <div class="row"><div class="i"><svg><use href="#i-star"/></svg></div><div><small>Theme</small><strong data-t="theme"></strong></div></div>
+      <div class="row"><div class="i"><svg><use href="#i-users"/></svg></div><div><small>Tetamu Hadir</small><strong><span id="pax">0</span> orang telah mengesahkan</strong></div></div>
+    </div>
+    <div class="note rv" data-t="note"></div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section style="padding-top:20px">
+    <h2 class="display rv" data-t="galleryTitle"></h2>
+    <div class="gal rv">
+      <div class="ph" data-slot="gallery1">
+      <!-- PHOTO 2: paste your image path or URL inside src="" -->
+      <img src="" alt="" draggable="false">
+      <svg><use href="#i-img"/></svg><span>Photo 2</span>
+    </div>
+      <div class="ph" data-slot="gallery2">
+      <!-- PHOTO 3: paste your image path or URL inside src="" -->
+      <img src="" alt="" draggable="false">
+      <svg><use href="#i-img"/></svg><span>Photo 3</span>
+    </div>
+    </div>
+  </section>
+
+  <!-- ===== RSVP FORM ===== -->
+  <section id="rsvp" style="padding-top:20px">
+    <h2 class="display rv" data-t="rsvpTitle"></h2>
+    <form id="rsvpForm" class="card form rv" novalidate>
+      <label for="nama">Nama Penuh</label>
+      <input id="nama" name="nama" type="text" maxlength="80" autocomplete="name" required>
+
+      <label for="tel">Nombor Telefon</label>
+      <input id="tel" name="tel" type="tel" inputmode="tel" maxlength="16" autocomplete="tel" placeholder="cth: 0123456789" required>
+
+      <span class="lbl">Adakah anda akan hadir?</span>
+      <div class="choice">
+        <label><input type="radio" name="hadir" value="Ya" checked><span>Ya, hadir</span></label>
+        <label><input type="radio" name="hadir" value="Tidak"><span>Tidak dapat hadir</span></label>
+      </div>
+
+      <label for="extra">Jumlah Tambahan Tetamu</label>
+      <input id="extra" name="extra" type="number" inputmode="numeric" min="0" max="20" value="0">
+      <small class="help">cth: 5 tambahan tetamu (tidak termasuk anda)</small>
+
+      <button class="btn red" type="submit" id="send">Hantar</button>
+      <p id="msg" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <!-- ===== ACTIONS ===== -->
+  <section style="padding-top:20px">
+    <h2 class="display rv" data-t="actionsTitle"></h2>
+    <div class="actions rv">
+      <a class="btn red" id="cal" target="_blank" rel="noopener"><svg><use href="#i-cal"/></svg>Add to Calendar</a>
+      <a class="btn blue" id="map" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Open Map</a>
+      <a class="btn" href="#rsvp"><svg><use href="#i-msg"/></svg>RSVP</a>
+    </div>
+  </section>
+
+  <footer data-t="closing"></footer>
+</main>
+
+<script>
+/* =====================================================================
+   EDIT HERE ONLY — everything on the invitation is controlled below.
+   ===================================================================== */
+var INVITE = {
+  // Page / header
+  pageTitle:     "Raiqal Hareez's Birthday Party",
+  coverEyebrow:  "You're invited to",
+  firstName:     "Raiqal",
+  lastName:      "Hareez",
+  coverSubtitle: "Birthday Party",
+  openLabel:     "Tap to Open",
+  saveTheDate:   "Save the Date!!!!",
+  heroEyebrow:   "Birthday Party of",
+
+  // Section titles
+  countdownTitle: "Avengers Assemble Starts In",
+  detailsTitle:   "Mission Details",
+  galleryTitle:   "Hero Gallery",
+  actionsTitle:   "Join the Team-Up",
+
+  // Event details (shown on the card)
+  dateText: "Saturday, 24 October 2026",
+  timeText: "4:00 PM – 8:00 PM",
+  venue:    "Level 5, Multipurpose Hall, Residen Permata",
+  theme:    "Marvel Superhero",
+  note:     "Free & easy activity. Please bring your swimming attire.",
+  closing:  "Any Questions?Contact us for more details. Ja 018-942 4020 OR Lynn 017-256 6308. See you there!",
+
+  // Machine-readable date (Malaysia time, UTC+8) — used by countdown & calendar
+  startISO: "2026-10-24T16:00:00+08:00",
+  calStart: "20261024T160000",
+  calEnd:   "20261024T200000",
+  timezone: "Asia/Kuala_Lumpur",
+
+  // Links
+  mapUrl:   "https://maps.app.goo.gl/mtodv566KQpSQoz37",              // paste a Google Maps / Waze link here; leave empty to search by venue name
+
+  // RSVP form
+  rsvpTitle:    "RSVP",
+  thanksYes:    "Terima kasih, {nama}! Kehadiran anda telah direkodkan.",
+  thanksNo:     "Terima kasih, {nama}. Semoga dapat bertemu lain kali.",
+  rsvpEndpoint: "https://script.google.com/macros/s/AKfycbxaWj2Cq3CimGiY4_eBVrByCzJLZV2bUV3QunMZFgi1rW6og7DrgGy9qrk6dlHnD6Ma/exec",          // paste your Google Apps Script Web App URL here (see setup steps). Empty = demo mode (count updates only in this browser)
+
+  // Video (optional) — shown in the wide "Photo / GIF 4" slot instead of the image. Use an MP4 (H.264) file path or link. Leave src "" for no video.
+  video: {
+    src:    "invite.mp4",   // e.g. "video/invite.mp4"
+    poster: ""    // cover image shown before play, e.g. "images/poster.jpg" (optional)
+  },
+
+  // Images — paste direct image links (or file paths like "images/photo1.jpg"). Leave "" to keep the placeholder.
+  images: {
+    hero:     "https://i.postimg.cc/J4Pt0C0J/Whats-App-Image-2026-10-08-at-15-52-21.jpg",   // Photo 1 - main round portrait
+    media:    "",   // Photo / GIF 4 - wide slot under the animation
+    gallery1: "https://i.postimg.cc/T2kXWdj2/family1-uclja-auntylynn.jpg",   // Photo 2
+    gallery2: "https://i.postimg.cc/Y0PVDS8B/family2-ucl-ja-auntylynn.jpg"    // Photo 3
+  }
+};
+/* ===================== END OF EDITABLE AREA ===================== */
+
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  document.title=INVITE.pageTitle;
+  document.querySelectorAll('[data-t]').forEach(function(el){el.textContent=INVITE[el.getAttribute('data-t')]||''});
+
+  // Open cover
+  $('openBtn').onclick=function(){var c=$('cover');c.classList.add('open');setTimeout(function(){c.style.display='none'},950)};
+
+  // Load images from INVITE.images, hide placeholder text once loaded
+  document.querySelectorAll('[data-slot]').forEach(function(box){
+    var key=box.getAttribute('data-slot'),im=box.querySelector('img'),src=INVITE.images[key];
+    if(key==='media'&&INVITE.video&&INVITE.video.src){
+      var v=box.querySelector('video');
+      v.setAttribute('src',INVITE.video.src);
+      if(INVITE.video.poster)v.setAttribute('poster',INVITE.video.poster);
+      box.classList.add('vid','has');return;
+    }
+    if(src)im.setAttribute('src',src);
+    var ok=function(){box.classList.add('has')};
+    if(im.getAttribute('src')){ if(im.complete&&im.naturalWidth)ok(); else im.addEventListener('load',ok); }
+  });
+
+  // Countdown
+  var target=new Date(INVITE.startISO).getTime(),p=function(n){return String(n).padStart(2,'0')};
+  function tick(){var x=Math.max(0,target-Date.now());
+    $('d').textContent=p(Math.floor(x/864e5));$('h').textContent=p(Math.floor(x%864e5/36e5));
+    $('m').textContent=p(Math.floor(x%36e5/6e4));$('s').textContent=p(Math.floor(x%6e4/1e3));}
+  tick();setInterval(tick,1000);
+
+  // Buttons
+  $('cal').href="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(INVITE.pageTitle)+"&dates="+INVITE.calStart+"/"+INVITE.calEnd+"&ctz="+INVITE.timezone+"&location="+encodeURIComponent(INVITE.venue);
+  $('map').href=INVITE.mapUrl||"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(INVITE.venue);
+
+  // RSVP form
+  var paxEl=$('pax'),form=$('rsvpForm'),msg=$('msg'),send=$('send'),extra=$('extra'),DEMO='rsvp_demo_total';
+  function setPax(n){paxEl.textContent=n}
+  function say(t,err){msg.textContent=t;msg.className=err?'err':''}
+  function loadTotal(){
+    if(INVITE.rsvpEndpoint){fetch(INVITE.rsvpEndpoint).then(function(r){return r.json()}).then(function(j){setPax(j.total)}).catch(function(){})}
+    else{try{setPax(+localStorage.getItem(DEMO)||0)}catch(e){}}
+  }
+  loadTotal();
+  form.querySelectorAll('input[name=hadir]').forEach(function(r){r.addEventListener('change',function(){
+    var no=form.hadir.value==='Tidak';extra.disabled=no;if(no)extra.value=0})});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var nama=form.nama.value.trim(),tel=form.tel.value.trim(),hadir=form.hadir.value,
+        n=hadir==='Ya'?Math.max(0,Math.min(20,parseInt(extra.value,10)||0)):0;
+    if(!nama){say('Sila isi nama penuh.',1);form.nama.focus();return}
+    if(!/^\+?[0-9\s-]{9,15}$/.test(tel)){say('Sila masukkan nombor telefon yang sah.',1);form.tel.focus();return}
+    var pax=hadir==='Ya'?1+n:0;
+    send.disabled=true;say('Menghantar...');
+    function done(total){
+      setPax(total);say((hadir==='Ya'?INVITE.thanksYes:INVITE.thanksNo).replace('{nama}',nama));
+      send.textContent='Telah dihantar';form.querySelectorAll('input').forEach(function(i){i.disabled=true});
+    }
+    if(INVITE.rsvpEndpoint){
+      fetch(INVITE.rsvpEndpoint,{method:'POST',body:JSON.stringify({nama:nama,telefon:tel,hadir:hadir,extra:n})})
+        .then(function(r){return r.json()}).then(function(j){done(j.total)})
+        .catch(function(){send.disabled=false;say('Maaf, penghantaran gagal. Sila cuba lagi.',1)});
+    }else{
+      var t=0;try{t=(+localStorage.getItem(DEMO)||0)+pax;localStorage.setItem(DEMO,t)}catch(e){t=(+paxEl.textContent||0)+pax}
+      done(t);
+    }
+  });
+
+  // Scroll reveal
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>
