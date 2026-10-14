@@ -94,6 +94,9 @@ footer{padding:30px 22px 60px;text-align:center;font-size:.85rem;opacity:.85}
 .form input[type=text],.form input[type=tel],.form input[type=number]{width:100%;font:400 1rem 'Poppins',system-ui,sans-serif;color:var(--navy);background:#fff;border:1.5px solid #dfe4f3;border-radius:12px;padding:.8rem 1rem;outline:0;transition:border-color .2s,box-shadow .2s}
 .form input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(28,63,158,.15)}
 .form input:disabled{background:#f1f3fa;color:#8b93b3}
+.form input[readonly]{background:#f1f3fa;color:#5b6794;cursor:default}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.split label{display:block}
 .form .help{color:#6a7399;font-size:.78rem}
 .choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .choice label{position:relative;margin:0;font-weight:500}
@@ -224,9 +227,20 @@ footer{padding:30px 22px 60px;text-align:center;font-size:.85rem;opacity:.85}
         <label><input type="radio" name="hadir" value="Tidak"><span>Tidak dapat hadir</span></label>
       </div>
 
+      <div class="split">
+        <div>
+          <label for="adult">Adult</label>
+          <input id="adult" name="adult" type="number" inputmode="numeric" min="0" max="20" value="0">
+        </div>
+        <div>
+          <label for="kids">Kids</label>
+          <input id="kids" name="kids" type="number" inputmode="numeric" min="0" max="20" value="0">
+        </div>
+      </div>
+
       <label for="extra">Jumlah Tambahan Tetamu</label>
-      <input id="extra" name="extra" type="number" inputmode="numeric" min="0" max="20" value="0">
-      <small class="help">cth: 5 tambahan tetamu (tidak termasuk anda)</small>
+      <input id="extra" name="extra" type="number" value="0" readonly tabindex="-1">
+      <small class="help">Dikira automatik daripada Adult + Kids (tidak termasuk anda)</small>
 
       <button class="btn red" type="submit" id="send">Hantar</button>
       <p id="msg" role="status" aria-live="polite"></p>
@@ -270,10 +284,10 @@ var INVITE = {
   // Event details (shown on the card)
   dateText: "Saturday, 24 October 2026",
   timeText: "4:00 PM – 8:00 PM",
-  venue:    "Level 5, Multipurpose Hall, Residen Permata",
+  venue:    "Level 5, Multipurpose Hall, Residensi Permata",
   theme:    "Marvel Superhero",
   note:     "Free & easy activity. Please bring your swimming attire.",
-  closing:  "Any Questions?Contact us for more details. Ja 018-942 4020 OR Lynn 017-256 6308. See you there!",
+  closing:  "Any Questions? Contact us for more details. Ja 018-942 4020 OR Lynn 017-256 6308. See you there!",
 
   // Machine-readable date (Malaysia time, UTC+8) — used by countdown & calendar
   startISO: "2026-10-24T16:00:00+08:00",
@@ -299,7 +313,7 @@ var INVITE = {
   // Images — paste direct image links (or file paths like "images/photo1.jpg"). Leave "" to keep the placeholder.
   images: {
     hero:     "https://i.postimg.cc/J4Pt0C0J/Whats-App-Image-2026-10-08-at-15-52-21.jpg",   // Photo 1 - main round portrait
-    media:    "",   // Photo / GIF 4 - wide slot under the animation
+    media:    "invite.mp4",   // Photo / GIF 4 - wide slot under the animation
     gallery1: "https://i.postimg.cc/T2kXWdj2/family1-uclja-auntylynn.jpg",   // Photo 2
     gallery2: "https://i.postimg.cc/Y0PVDS8B/family2-ucl-ja-auntylynn.jpg"    // Photo 3
   }
@@ -340,7 +354,7 @@ var INVITE = {
   $('map').href=INVITE.mapUrl||"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(INVITE.venue);
 
   // RSVP form
-  var paxEl=$('pax'),form=$('rsvpForm'),msg=$('msg'),send=$('send'),extra=$('extra'),DEMO='rsvp_demo_total';
+  var paxEl=$('pax'),form=$('rsvpForm'),msg=$('msg'),send=$('send'),extra=$('extra'),adult=$('adult'),kids=$('kids'),DEMO='rsvp_demo_total';
   function setPax(n){paxEl.textContent=n}
   function say(t,err){msg.textContent=t;msg.className=err?'err':''}
   function loadTotal(){
@@ -349,13 +363,19 @@ var INVITE = {
   }
   loadTotal();
   form.querySelectorAll('input[name=hadir]').forEach(function(r){r.addEventListener('change',function(){
-    var no=form.hadir.value==='Tidak';extra.disabled=no;if(no)extra.value=0})});
+    var no=form.hadir.value==='Tidak';
+    adult.disabled=kids.disabled=extra.disabled=no;
+    if(no){adult.value=kids.value=extra.value=0}})});
+  function cnt(el){return Math.max(0,Math.min(20,parseInt(el.value,10)||0))}
+  function sync(){extra.value=cnt(adult)+cnt(kids)}
+  adult.addEventListener('input',sync);kids.addEventListener('input',sync);
   form.addEventListener('submit',function(e){
     e.preventDefault();
     var nama=form.nama.value.trim(),tel=form.tel.value.trim(),hadir=form.hadir.value,
-        n=hadir==='Ya'?Math.max(0,Math.min(20,parseInt(extra.value,10)||0)):0;
+        a=hadir==='Ya'?cnt(adult):0,k=hadir==='Ya'?cnt(kids):0,n=a+k;
     if(!nama){say('Sila isi nama penuh.',1);form.nama.focus();return}
     if(!/^\+?[0-9\s-]{9,15}$/.test(tel)){say('Sila masukkan nombor telefon yang sah.',1);form.tel.focus();return}
+    if(n>20){say('Maksimum 20 tambahan tetamu.',1);return}
     var pax=hadir==='Ya'?1+n:0;
     send.disabled=true;say('Menghantar...');
     function done(total){
@@ -363,7 +383,7 @@ var INVITE = {
       send.textContent='Telah dihantar';form.querySelectorAll('input').forEach(function(i){i.disabled=true});
     }
     if(INVITE.rsvpEndpoint){
-      fetch(INVITE.rsvpEndpoint,{method:'POST',body:JSON.stringify({nama:nama,telefon:tel,hadir:hadir,extra:n})})
+      fetch(INVITE.rsvpEndpoint,{method:'POST',body:JSON.stringify({nama:nama,telefon:tel,hadir:hadir,extra:n,adult:a,kids:k})})
         .then(function(r){return r.json()}).then(function(j){done(j.total)})
         .catch(function(){send.disabled=false;say('Maaf, penghantaran gagal. Sila cuba lagi.',1)});
     }else{
